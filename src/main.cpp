@@ -3,7 +3,10 @@
 #include <MCUFRIEND_kbv.h>
 #include "GyverUART.h"
 #include "defines.h"
-
+#include <Fonts/FreeSans18pt7b.h>
+#include <Fonts/FreeMono12pt7b.h>
+#include <FreeDefaultFonts.h>
+#include <Fonts/FreeMonoBold12pt7b.h>
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
 MCUFRIEND_kbv tft;
 String inString="";
@@ -55,6 +58,33 @@ void clrscr(void){
  tft.drawFastVLine(0,0,tft.height()-1,GREEN) ;// ok
  tft.drawFastVLine(tft.width()-1,0,tft.width()-1,GREEN) ;// ok
 }
+String pr="";
+int px;
+int py;
+int ps;
+void text(String b){
+/////// стираем старое черным цветом
+  tft.setFont(&FreeSans18pt7b);
+  tft.setCursor(px, py);
+  tft.setTextColor(BLACK);
+  tft.setTextSize(ps);
+  tft.print(pr);
+/////// запоминаем что стирать и рисуем новое
+  String part01 = getValue(b,' ',1);
+  String part02 = getValue(b,' ',2);
+  String part03 = getValue(b,' ',3);
+  String part04 = getValue(b,' ',4);
+  String part05 = getValue(b,' ',5);
+  px = part01.toInt();
+  py = part02.toInt();
+  ps = part04.toInt();
+  tft.setFont(&FreeSans18pt7b);
+  tft.setCursor(px, py);
+  tft.setTextColor(part03.toInt());
+  tft.setTextSize(ps);//;
+  tft.print(part05);
+  pr = part05;
+}
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
 void setup() {
   uartBegin();
@@ -67,6 +97,7 @@ void setup() {
  
 }
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 void loop() {
   
   while (uartAvailable() > 0) {
@@ -82,11 +113,17 @@ void loop() {
         break;
        case 'c':uartPrintln("Ok - clrscr");
         clrscr();
-        break;  
+        break;
+       case 't':uartPrintln("Ok - text");
+        text(inString);
+        break;   
        default: uartPrintln("Default");
         break; 
       }
       inString="";   
-    }    
+    }
+    else {
+        ;
+    }      
   }
 }
