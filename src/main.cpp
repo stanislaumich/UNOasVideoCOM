@@ -106,18 +106,18 @@ void loop() {
     if (inChar == '\n') {
       switch (inString.charAt(0))
       {
-       case '0':uartPrintln("Ok - 0");
+       case '0':uartPrintln("+ 0");
         break;
-       case 'b':uartPrintln("Ok - bar");
+       case 'b':uartPrintln("+ bar");
         bar(inString);
         break;
-       case 'c':uartPrintln("Ok - clrscr");
+       case 'c':uartPrintln("+ clrscr");
         clrscr();
         break;
-       case 't':uartPrintln("Ok - text");
+       case 't':uartPrintln("+ text");
         text(inString);
         break;   
-       default: uartPrintln("Default");
+       default: uartPrintln("- unknown");
         break; 
       }
       inString="";   
