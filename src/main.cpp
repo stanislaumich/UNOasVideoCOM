@@ -3,10 +3,11 @@
 #include <MCUFRIEND_kbv.h>
 #include "GyverUART.h"
 #include "defines.h"
-#include <Fonts/FreeSans18pt7b.h>
-#include <Fonts/FreeMono12pt7b.h>
+//#include <Fonts/FreeSans18pt7b.h>
+//#include <Fonts/FreeMono12pt7b.h>
 #include <FreeDefaultFonts.h>
-#include <Fonts/FreeMonoBold12pt7b.h>
+//#include <Fonts/FreeMonoBold12pt7b.h>
+#include <FontsRus/TimesNRCyr10.h> 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
 MCUFRIEND_kbv tft;
 String inString="";
@@ -43,6 +44,8 @@ strIndex[1] = (i == maxIndex) ? i+1 : i;
 return found>index ? data.substring(strIndex[0], strIndex[1]) : "";
 } 
 
+
+
 void bar(String b){
         String part01 = getValue(b,' ',1);
         String part02 = getValue(b,' ',2);
@@ -64,7 +67,7 @@ int py;
 int ps;
 void text(String b){
 /////// стираем старое черным цветом
-  tft.setFont(&FreeSans18pt7b);
+  tft.setFont(&TimesNRCyr10pt8b);
   tft.setCursor(px, py);
   tft.setTextColor(BLACK);
   tft.setTextSize(ps);
@@ -78,7 +81,7 @@ void text(String b){
   px = part01.toInt();
   py = part02.toInt();
   ps = part04.toInt();
-  tft.setFont(&FreeSans18pt7b);
+  tft.setFont(&TimesNRCyr10pt8b);
   tft.setCursor(px, py);
   tft.setTextColor(part03.toInt());
   tft.setTextSize(ps);//;
