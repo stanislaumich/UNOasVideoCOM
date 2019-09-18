@@ -3,11 +3,12 @@
 #include <MCUFRIEND_kbv.h>
 #include "GyverUART.h"
 #include "defines.h"
-//#include <Fonts/FreeSans18pt7b.h>
-//#include <Fonts/FreeMono12pt7b.h>
-//#include <FreeDefaultFonts.h>
-//#include <Fonts/FreeMonoBold12pt7b.h>
-//#include <FontsRus/bahamas18.h> 
+/////////////////////////////////////////////////////////////////////////////////////////////////////////
+ //#include <Fonts/FreeSans18pt7b.h>
+ //#include <Fonts/FreeMono12pt7b.h>
+ //#include <FreeDefaultFonts.h>
+ //#include <Fonts/FreeMonoBold12pt7b.h>
+ //#include <FontsRus/bahamas18.h> 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
 MCUFRIEND_kbv tft;
 String inString="";
