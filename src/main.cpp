@@ -115,7 +115,8 @@ void setup()
  {
   uartBegin();
   uartPrintln("+ Started Video"); 
-  uint16_t ID = tft.readID(); uartPrintln(ID, HEX);
+  uint16_t ID = tft.readID(); 
+  uartPrintln(ID, HEX);
   tft.begin(ID); 
   tft.cp437(true);
   tft.setRotation(LANDSCAPE);
