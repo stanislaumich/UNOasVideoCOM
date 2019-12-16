@@ -113,10 +113,12 @@ void text(String b)
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
 void setup()
  {
+  //Serial.begin(9600);
   uartBegin();
+  //Serial.println("+ Started Video");
   uartPrintln("+ Started Video"); 
   uint16_t ID = tft.readID(); 
-  uartPrintln(ID, HEX);
+  //Serial.println(ID, HEX);//uartPrintln(ID, HEX);
   tft.begin(ID); 
   tft.cp437(true);
   tft.setRotation(LANDSCAPE);
@@ -133,16 +135,16 @@ void loop()
       {
        case '0':uartPrintln("+ 0");
         break;
-       case 'b':uartPrintln("+ bar");
+       case 'b'://Serial.println("+ bar");
         bar(inString);
         break;
-       case 'c':uartPrintln("+ clrscr");
+       case 'c'://Serial.println("+ clrscr");
         clrscr();
         break;
-       case 't':uartPrintln("+ text");
+       case 't'://Serial.println("+ text");
         text(inString);
         break;   
-       default: uartPrintln("- unknown");
+       default: //Serial.println("- unknown");
         break; 
       }
       inString="";   
