@@ -107,16 +107,17 @@ void text(String b)
   tft.setCursor(px, py);
   tft.setTextColor(part03.toInt());
   tft.setTextSize(ps);//;
-  tft.print(utf8rus(part05));
+  tft.print(part05);
   pr = part05;
  }
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
 void setup()
  {
-  uartBegin();
-  uartPrintln("+ Started Video"); 
+  Serial.begin(115200);
+  //Serial.println("+ Started Video"); 
   uint16_t ID = tft.readID(); 
-  uartPrintln(ID, HEX);
+  //Serial.println(ID, HEX);
+  text("Start");
   tft.begin(ID); 
   tft.cp437(true);
   tft.setRotation(LANDSCAPE);
@@ -125,24 +126,27 @@ void setup()
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
 void loop() 
  {
-  while (uartAvailable() > 0) {
-    char inChar = uartRead();
+  while (Serial.available() > 0) {
+    char inChar = Serial.readstring();
     inString += inChar;
     if (inChar == '\n') {
       switch (inString.charAt(0))
       {
-       case '0':uartPrintln("+ 0");
+       case '0':Serial.println("+ 0");
         break;
-       case 'b':uartPrintln("+ bar");
+       case 'b':Serial.println("+ bar - "+inString);
         bar(inString);
         break;
-       case 'c':uartPrintln("+ clrscr");
+       case 'c':Serial.println("+ clrscr");
         clrscr();
         break;
-       case 't':uartPrintln("+ text");
+       case 't':Serial.println("+ text");
         text(inString);
-        break;   
-       default: uartPrintln("- unknown");
+        break;
+       case 'a':Serial.println("+ a test");
+        tft.fillRect(10,10,80,80,40);
+        break;    
+       default: Serial.println("- unknown");
         break; 
       }
       inString="";   
@@ -151,4 +155,5 @@ void loop()
         ;
     }      
   }
+  
  }
