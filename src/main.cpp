@@ -16,7 +16,6 @@ String pr="";
 int px;
 int py;
 int ps;
-int prarr[12]={720,720,720,720,720,720,720,720,720,720,720,720};
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
 String getValue(String data, char separator, int index)
  {
@@ -94,7 +93,7 @@ void text(String b)
   tft.setCursor(px, py);
   tft.setTextColor(BLACK);
   tft.setTextSize(ps);
-  tft.print(pr);
+  tft.print(utf8rus(pr));
    /////// запоминаем что стирать и рисуем новое
   String part01 = getValue(b,' ',1);
   String part02 = getValue(b,' ',2);
@@ -108,80 +107,44 @@ void text(String b)
   tft.setCursor(px, py);
   tft.setTextColor(part03.toInt());
   tft.setTextSize(ps);//;
-  tft.print(part05);
+  tft.print(utf8rus(part05));
   pr = part05;
  }
-
-void pbar(int valp, int bcolor){
-       int val=prarr[valp];
-       int bott=235; //низ        
-       int x1=5+valp*25;// width 20 + space 5 and start is 5
-       int x2=20;
-       int y1=bott-((val-720)*3.5);
-       int y2=bott-y1;
-       String zz="b "+String(x1)+' '+String(y1)+' '+String(x2)+' '+String(y2)+' '+String(bcolor);
-       bar(zz);       
- }
-
-void press(String sp){
-  int p=getValue(sp,' ',1).toInt();
- // заполняем массив в конец
- for (int i=1;i<12;i++){
-  pbar(i-1,BLACK);// erase
-  prarr[i-1]=prarr[i];// move
-  pbar(i-1,WHITE);//write  
- }// for
- pbar(11,BLACK);// erase
- prarr[11]=p;  // insert to end
- pbar(11,WHITE);//write
- text("t 225 10 65535 5 "+String(p));
- //String sf="";
- //for (int i=0;i<12;i++) {
- //  sf+= i+' ';
- //}
- //Serial.println(sf);
-}
-  
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
 void setup()
  {
-  Serial.begin(115200);
-  //Serial.println("+ Started Video"); 
+  //Serial.begin(9600);
+  uartBegin();
+  //Serial.println("+ Started Video");
+  uartPrintln("+ Started Video"); 
   uint16_t ID = tft.readID(); 
-  //Serial.println(ID, HEX);
-  text("Start");
+  //Serial.println(ID, HEX);//uartPrintln(ID, HEX);
   tft.begin(ID); 
   tft.cp437(true);
   tft.setRotation(LANDSCAPE);
-  clrscr();
+  clrscr(); 
  }
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
 void loop() 
  {
-  while (Serial.available() > 0) {
-    char inChar = Serial.read();
+  while (uartAvailable() > 0) {
+    char inChar = uartRead();
     inString += inChar;
     if (inChar == '\n') {
       switch (inString.charAt(0))
       {
-       case '0':Serial.println("+ 0");
+       case '0':uartPrintln("+ 0");
         break;
-       case 'b':Serial.println("+ bar - "+inString);
+       case 'b'://Serial.println("+ bar");
         bar(inString);
         break;
-       case 'p':Serial.println("+ press add - "+inString);
-        press(inString);
-        break;
-       case 'c':Serial.println("+ clrscr");
+       case 'c'://Serial.println("+ clrscr");
         clrscr();
         break;
-       case 't':Serial.println("+ text");
+       case 't'://Serial.println("+ text");
         text(inString);
-        break;
-       case 'a':Serial.println("+ a test");
-        tft.fillRect(10,10,80,80,40);
-        break;    
-       default: Serial.println("- unknown");
+        break;   
+       default: //Serial.println("- unknown");
         break; 
       }
       inString="";   
@@ -190,5 +153,4 @@ void loop()
         ;
     }      
   }
-  
  }
